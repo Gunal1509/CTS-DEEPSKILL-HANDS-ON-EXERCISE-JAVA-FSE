@@ -1,0 +1,25 @@
+/target/
+# Maven
+target/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Local overrides only (not the main file)
+application-local.properties
+application-*.properties.local
