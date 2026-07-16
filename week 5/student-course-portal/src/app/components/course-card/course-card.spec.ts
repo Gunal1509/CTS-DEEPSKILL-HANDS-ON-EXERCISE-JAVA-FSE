@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CourseCard } from './course-card';
 
 describe('CourseCard', () => {
@@ -14,6 +13,14 @@ describe('CourseCard', () => {
 
     fixture = TestBed.createComponent(CourseCard);
     component = fixture.componentInstance;
+    component.course = {
+      id: 1,
+      name: 'Test Course',
+      code: 'TEST101',
+      credits: 3,
+      gradeStatus: 'passed',
+      enrolled: false
+    };
     fixture.detectChanges();
   });
 
@@ -21,3 +28,4 @@ describe('CourseCard', () => {
     expect(component).toBeTruthy();
   });
 });
+

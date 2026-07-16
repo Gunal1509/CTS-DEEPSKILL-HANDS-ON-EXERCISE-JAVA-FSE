@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { Header } from './header';
+import { EnrollmentForm } from './enrollment-form';
 
-describe('Header', () => {
-  let component: Header;
-  let fixture: ComponentFixture<Header>;
+describe('EnrollmentForm', () => {
+  let component: EnrollmentForm;
+  let fixture: ComponentFixture<EnrollmentForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Header],
-      providers: [provideRouter([])]
+      imports: [EnrollmentForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Header);
+    fixture = TestBed.createComponent(EnrollmentForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,4 +20,3 @@ describe('Header', () => {
     expect(component).toBeTruthy();
   });
 });
-
