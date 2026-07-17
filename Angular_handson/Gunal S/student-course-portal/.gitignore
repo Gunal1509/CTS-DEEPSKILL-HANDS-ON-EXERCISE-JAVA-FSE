@@ -43,6 +43,8 @@ __screenshots__/
 /tsconfig
 /tsconfig.spec
 /.angular
+/.package
+/.package-lock
 
 # System files
 .DS_Store
