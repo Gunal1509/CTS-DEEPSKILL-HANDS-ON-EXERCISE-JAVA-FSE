@@ -3,7 +3,18 @@
   <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
   <a routerLink="/courses" routerLinkActive="active">Courses</a>
   <a routerLink="/profile" routerLinkActive="active">Profile</a>
-  <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
-  <a routerLink="/enroll-reactive" routerLinkActive="active">Enroll (Reactive)</a>
+  <a routerLink="/enroll" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Enroll</a>
+  <a routerLink="/enroll/reactive" routerLinkActive="active">Enroll (Reactive)</a>
+
+  <!-- Authentication Status Control for Route Guards testing -->
+  <div class="auth-btn-container" style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+    <span class="auth-status-dot" [style.background-color]="authService.isLoggedIn ? '#10b981' : '#ef4444'" style="width: 8px; height: 8px; border-radius: 50%;"></span>
+    <span style="font-size: 0.85rem; color: #d1d5db; font-weight: 500;">
+      {{ authService.isLoggedIn ? 'Logged In' : 'Logged Out' }}
+    </span>
+    <button (click)="toggleAuth()" style="background-color: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.8rem; transition: background-color 0.15s ease-in-out;">
+      {{ authService.isLoggedIn ? 'Logout' : 'Login' }}
+    </button>
+  </div>
 </nav>
 

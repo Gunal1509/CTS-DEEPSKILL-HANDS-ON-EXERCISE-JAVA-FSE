@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactiveEnrollmentForm } from './reactive-enrollment-form';
+import { CoursesLayout } from './courses-layout';
 
-describe('ReactiveEnrollmentForm', () => {
-  let component: ReactiveEnrollmentForm;
-  let fixture: ComponentFixture<ReactiveEnrollmentForm>;
+describe('CoursesLayout', () => {
+  let component: CoursesLayout;
+  let fixture: ComponentFixture<CoursesLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveEnrollmentForm]
+      imports: [CoursesLayout]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReactiveEnrollmentForm);
+    fixture = TestBed.createComponent(CoursesLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

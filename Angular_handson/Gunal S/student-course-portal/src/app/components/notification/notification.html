@@ -1,0 +1,15 @@
+<div class="notification-widget">
+  <h4>Local Component Notifications</h4>
+  <div class="log-actions">
+    <button (click)="addLog('Local action triggered!')" class="btn-log">Trigger Event</button>
+    <button (click)="clearLogs()" class="btn-clear">Clear Logs</button>
+  </div>
+  <div class="logs-container">
+    <ul *ngIf="notifications.length > 0; else noLogs" class="logs-list">
+      <li *ngFor="let note of notifications" class="log-item">{{ note }}</li>
+    </ul>
+    <ng-template #noLogs>
+      <p class="no-logs">No local logs recorded yet.</p>
+    </ng-template>
+  </div>
+</div>

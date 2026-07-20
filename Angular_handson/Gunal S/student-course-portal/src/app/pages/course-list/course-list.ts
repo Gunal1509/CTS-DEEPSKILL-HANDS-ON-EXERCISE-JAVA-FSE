@@ -1,44 +1,91 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Observable, Subscription, BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { CourseCard } from '../../components/course-card/course-card';
 import { Course } from '../../models/course.model';
+import { loadCourses } from '../../store/course/course.actions';
+import { selectAllCourses, selectCoursesLoading, selectCoursesError } from '../../store/course/course.selectors';
 
 @Component({
   selector: 'app-course-list',
-  imports: [CommonModule, CourseCard],
+  imports: [CommonModule, CourseCard, FormsModule],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
-export class CourseList implements OnInit {
-  // HANDS-ON 3 - Task 1, Step 25: loading flag toggled after a simulated fetch.
-  isLoading = true;
-
-  // HANDS-ON 2 - Task 3, Step 22: 5 hardcoded course objects.
-  courses: Course[] = [
-    { id: 1, name: 'Introduction to Angular', code: 'WEB101', credits: 3, gradeStatus: 'passed', enrolled: true },
-    { id: 2, name: 'Data Structures', code: 'CS201', credits: 4, gradeStatus: 'pending', enrolled: false },
-    { id: 3, name: 'Database Systems', code: 'CS210', credits: 3, gradeStatus: 'failed', enrolled: false },
-    { id: 4, name: 'UI/UX Design', code: 'DES150', credits: 2, gradeStatus: 'pending', enrolled: true },
-    { id: 5, name: 'Cloud Computing', code: 'CS330', credits: 4, gradeStatus: 'passed', enrolled: false },
-  ];
-
+export class CourseList implements OnInit, OnDestroy {
+  searchTerm = '';
   selectedCourseId: number | null = null;
+  private searchSubject = new BehaviorSubject<string>('');
+  private querySub: Subscription | null = null;
 
-  ngOnInit(): void {
-    // HANDS-ON 3 - Task 1, Step 25: simulate a network fetch delay.
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 1500);
+  courses$: Observable<Course[]>;
+  isLoading$: Observable<boolean>;
+  errorMessage$: Observable<string | null>;
+  filteredCourses$: Observable<Course[]>;
+
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.courses$ = this.store.select(selectAllCourses);
+    this.isLoading$ = this.store.select(selectCoursesLoading);
+    this.errorMessage$ = this.store.select(selectCoursesError);
+
+    this.filteredCourses$ = combineLatest([
+      this.courses$,
+      this.searchSubject.asObservable()
+    ]).pipe(
+      map(([courses, term]) => {
+        if (!term.trim()) {
+          return courses;
+        }
+        const lowerTerm = term.toLowerCase().trim();
+        return courses.filter(
+          (c) =>
+            c.name.toLowerCase().includes(lowerTerm) ||
+            c.code.toLowerCase().includes(lowerTerm)
+        );
+      })
+    );
   }
 
-  // HANDS-ON 3 - Task 1, Step 26: trackBy returns a stable identity (course.id)
-  // so Angular only re-renders items whose id changed, instead of destroying
-  // and recreating every <app-course-card> whenever the courses array reference changes.
+  ngOnInit(): void {
+    // Step 96: Dispatch the load action in ngOnInit
+    this.store.dispatch(loadCourses());
+
+    // Sync route parameters to reactive search filter subject
+    this.querySub = this.route.queryParamMap.subscribe((params) => {
+      this.searchTerm = params.get('search') || '';
+      this.searchSubject.next(this.searchTerm);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.querySub) {
+      this.querySub.unsubscribe();
+    }
+  }
+
+  onSearchChange(): void {
+    this.router.navigate(['/courses'], {
+      queryParams: { search: this.searchTerm || null },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  onViewDetails(courseId: number): void {
+    this.router.navigate(['/courses', courseId]);
+  }
+
   trackByCourseId(index: number, course: Course): number {
     return course.id;
   }
 
-  // HANDS-ON 2 - Task 3, Step 23: handle the bubbled-up (enrollRequested) event.
   onEnroll(courseId: number): void {
     console.log('Enrolling in course: ' + courseId);
     this.selectedCourseId = courseId;

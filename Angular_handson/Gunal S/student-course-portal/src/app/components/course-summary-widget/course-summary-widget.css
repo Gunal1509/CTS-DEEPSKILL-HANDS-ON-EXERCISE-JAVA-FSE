@@ -1,0 +1,53 @@
+.summary-widget {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+}
+
+.summary-widget h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+.summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.stat-desc {
+  font-size: 0.85rem;
+  color: #1e40af;
+  line-height: 1.2;
+}
+
+.btn-add-mock {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  align-self: flex-start;
+}
+
+.btn-add-mock:hover {
+  background-color: #1d4ed8;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CourseService } from '../../../services/course';
 import {
   FormBuilder,
   FormGroup,
@@ -22,8 +23,11 @@ export class ReactiveEnrollmentForm implements OnInit {
   enrollForm!: FormGroup;
   submitted = false;
 
-  // Step 49: Inject FormBuilder in the constructor
-  constructor(private fb: FormBuilder) {}
+  // Step 49: Inject FormBuilder and CourseService in the constructor
+  constructor(
+    private fb: FormBuilder,
+    private courseService: CourseService
+  ) {}
 
   // Step 49: In ngOnInit, build the form
   ngOnInit(): void {
@@ -109,6 +113,24 @@ export class ReactiveEnrollmentForm implements OnInit {
 
     if (this.enrollForm.valid) {
       this.submitted = true;
+
+      // Step 81: Wire createCourse to the enrollment form's submit handler to trigger POST
+      const newCourseName = `Enrollment: ${this.enrollForm.value.studentName}`;
+      const newCourseCode = `EC-${this.enrollForm.value.courseId || '999'}`;
+      this.courseService.createCourse({
+        name: newCourseName,
+        code: newCourseCode,
+        credits: 3,
+        gradeStatus: 'pending',
+        enrolled: true
+      }).subscribe({
+        next: (created) => {
+          console.log('Course created successfully through form POST:', created);
+        },
+        error: (err) => {
+          console.error('Failed to create course through form POST:', err);
+        }
+      });
     }
   }
 

@@ -1,0 +1,48 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "name": "Angular Basics",
+      "code": "ANG-101",
+      "credits": 3,
+      "gradeStatus": "passed"
+    },
+    {
+      "id": "2",
+      "name": "RxJS Deep Dive",
+      "code": "RXJ-202",
+      "credits": 4,
+      "gradeStatus": "pending"
+    },
+    {
+      "id": "3",
+      "name": "TypeScript Advanced",
+      "code": "TS-303",
+      "credits": 3,
+      "gradeStatus": "passed"
+    },
+    {
+      "id": "4",
+      "name": "State Management",
+      "code": "ANG-404",
+      "credits": 4,
+      "gradeStatus": "failed"
+    },
+    {
+      "id": "5",
+      "name": "Angular Routing & Lazy Loading",
+      "code": "ANG-505",
+      "credits": 3,
+      "gradeStatus": "pending"
+    }
+  ],
+  "enrollments": [
+    {
+      "id": "HPPyI3JUfgI",
+      "courseId": "4",
+      "studentName": "GUNAL s"
+    }
+  ],
+  "students": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

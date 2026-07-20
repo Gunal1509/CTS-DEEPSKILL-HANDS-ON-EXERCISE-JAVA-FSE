@@ -31,8 +31,12 @@
     <input
       type="text"
       [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
       placeholder="Search courses..."
     />
     <p>Searching for: {{ searchTerm }}</p>
   </div>
+
+  <!-- Course Summary Widget sharing CourseService singleton instance -->
+  <app-course-summary-widget></app-course-summary-widget>
 </section>
